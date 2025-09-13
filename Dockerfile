@@ -18,11 +18,10 @@ RUN echo "eula=true" > /mc/eula.txt
 
 COPY defaults/ /defaults/
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 ENV JAVA_OPTS="-Xms1G -Xmx2G"
 
-EXPOSE 25565
+COPY entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
+CMD ["sh", "/entrypoint.sh"]
 
-ENTRYPOINT ["/entrypoint.sh"]
+EXPOSE 25565
